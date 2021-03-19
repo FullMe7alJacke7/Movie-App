@@ -24,9 +24,9 @@ class MovieController extends Controller
     {
         $popularMovies = Http::get('https://api.themoviedb.org/3/movie/popular?api_key='. config('services.tmdb.api_key'))->json()['results'];
         $nowPlayingMovies = Http::get('https://api.themoviedb.org/3/movie/now_playing?api_key=' . config('services.tmdb.api_key') . '&language=en-US&page=1')->json()['results'];
-        $genresArray = Http::get('https://api.themoviedb.org/3/genre/movie/list?api_key=' . config('services.tmdb.api_key') . '&language=en-US')->json();
+        $genresArray = Http::get('https://api.themoviedb.org/3/genre/movie/list?api_key=' . config('services.tmdb.api_key') . '&language=en-US')->json()['genres'];
 
-        $genres = collect($genresArray['genres'])->pluck('name', 'id');
+        $genres = collect($genresArray)->pluck('name', 'id');
 
         return \view('index', compact([
             'popularMovies',
@@ -65,9 +65,7 @@ class MovieController extends Controller
     public function show($id)
     {
 
-//        https://api.themoviedb.org/3/movie/527774?api_key=ebe86aa3836f4012f8f0e803498c9b74&append_to_response=credits,videos,images
         $movie = Http::get('https://api.themoviedb.org/3/movie/'.$id.'?api_key='.config('services.tmdb.api_key').'&append_to_response=credits,videos,images')->json();
-        dump($movie);
 
         return view('Movies.show', [
             'movie' => $movie,
