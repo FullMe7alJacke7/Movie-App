@@ -9,6 +9,7 @@ use App\Http\Livewire\Auth\Passwords\Email;
 use App\Http\Livewire\Auth\Passwords\Reset;
 use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Auth\Verify;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,8 +22,17 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', [MovieController::class, 'index'])->name('movies.index');
+Route::get('movies/{id}', [MovieController::class, 'show'])->name('movies.show');
 
-Route::view('/', 'index')->name('home');
+
+
+
+
+
+
+
+
 
 Route::middleware('guest')->group(function () {
     Route::get('login', Login::class)
@@ -56,5 +66,6 @@ Route::middleware('auth')->group(function () {
         ->name('logout');
 });
 
-Route::resource('movies', MovieController::class);
+
+
 Route::resource('tags', \App\Http\Controllers\TagController::class);

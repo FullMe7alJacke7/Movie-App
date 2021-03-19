@@ -22,21 +22,17 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $client = new Client();
+        $popularMovies = Http::get('https://api.themoviedb.org/3/movie/popular?api_key='. config('services.tmdb.api_key'))->json()['results'];
+        $nowPlayingMovies = Http::get('https://api.themoviedb.org/3/movie/now_playing?api_key=' . config('services.tmdb.api_key') . '&language=en-US&page=1')->json()['results'];
+        $genresArray = Http::get('https://api.themoviedb.org/3/genre/movie/list?api_key=' . config('services.tmdb.api_key') . '&language=en-US')->json();
 
-        dd($client->request(
-            'GET',
-            'https://api.themoviedb.org/3/movie/popular',
-            [
-//                'headers' => [
-//                    'Bearer Token' => "ebe86aa3836f4012f8f0e803498c9b74",
-//                    'Authorization' => 'Bearer ebe86aa3836f4012f8f0e803498c9b74'
-//                ],
-                'form_params' =>
-                    [
-                        'api_key' => "ebe86aa3836f4012f8f0e803498c9b74",
-                    ]
-            ]));
+        $genres = collect($genresArray['genres'])->pluck('name', 'id');
+
+        return \view('index', compact([
+            'popularMovies',
+            'nowPlayingMovies',
+            'genres',
+        ]));
     }
 
     /**
@@ -66,9 +62,16 @@ class MovieController extends Controller
      * @param Movie $movie
      * @return Application|Factory|View|Response
      */
-    public function show(Movie $movie)
+    public function show($id)
     {
-        return view('Movies.show')->with('movie');
+
+//        https://api.themoviedb.org/3/movie/527774?api_key=ebe86aa3836f4012f8f0e803498c9b74&append_to_response=credits,videos,images
+        $movie = Http::get('https://api.themoviedb.org/3/movie/'.$id.'?api_key='.config('services.tmdb.api_key').'&append_to_response=credits,videos,images')->json();
+        dump($movie);
+
+        return view('Movies.show', [
+            'movie' => $movie,
+        ]);
     }
 
     /**
