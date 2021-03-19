@@ -21,13 +21,7 @@
             </ul>
 
             <div class="flex flex-col md:flex-row items-center ml-5">
-                <div class="relative mt-3 md:mt-0">
-                    <input type="text" class="bg-gray-800 text-sm rounded-full w-64 px-4 pl-8 py-1
-                        focus:outline-none focus:shadow-outline" placeholder="Search">
-                    <div class="absolute top-0">
-                        <i class="fas fa-search fill-current text-gray-500 mt-2 ml-3"></i>
-                    </div>
-                </div>
+                <livewire:search-dropdown/>
                 <div class="md:ml-4 mt-3 md:mt-0">
                     <a href="#">
 {{--                        <img src="/img/avatar.jpg" alt="avatar" class="rounded-full w-8 h-8">--}}
