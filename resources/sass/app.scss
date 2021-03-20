@@ -40,6 +40,10 @@
  */
 @tailwind utilities;
 
+.spinner{
+    position: absolute;
+}
+
 /**
  * Here you would add any custom utilities you need that don't come out of the
  * box with Tailwind.

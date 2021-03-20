@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Illuminate\Support\Facades\Http;
+use Livewire\Livewire;
 use Tests\TestCase;
 
 class ViewMoviesTest extends TestCase
@@ -13,9 +14,9 @@ class ViewMoviesTest extends TestCase
     public function the_main_page_shows_correct_info()
     {
         Http::fake([
-            'https://api.themoviedb.org/3/movie/popular' => $this->fakePopularMovies(),
-            'https://api.themoviedb.org/3/movie/now_playing' => $this->fakeNowPlayingMovies(),
-            'https://api.themoviedb.org/3/genre/movie/list' => $this->fakeGenreIds(),
+            'https://api.themoviedb.org/3/movie/popular' => $this->fakePopularMovies(), 200,
+            'https://api.themoviedb.org/3/movie/now_playing' => $this->fakeNowPlayingMovies(), 200,
+            'https://api.themoviedb.org/3/genre/movie/list' => $this->fakeGenreIds(), 200,
         ]);
 
         $response = $this->get(route('movies.index'));
@@ -24,6 +25,27 @@ class ViewMoviesTest extends TestCase
         $response->assertSee('Fake Movie');
         $response->assertSee('Now Playing Fake Movie');
 //        $response->assertSee('Animation, Adventure, Fantasy, Family, Action');
+    }
+
+    public function the_movie_page_shows_the_correct_info()
+    {
+        Http::fake(['https://api.themoviedb.org/3/movie/popular' => $this->fakeSingleMovie(), 200]);
+
+        $response = $this->get(route('movies.show', 12345));
+        $response->assertSee('Fake Jumanji');
+        $response->assertSee('Jeanne McCarthy');
+        $response->assertSee('Casting Director');
+        $response->assertSee('Dwayne Johnson');
+    }
+
+    public function the_search_dropdown_works_correctly()
+    {
+        Http::fake(['https://api.themoviedb.org/3/movie/popular' => $this->fakeSearchMovies(), 200]);
+
+        Livewire::test('search-dropdown')
+            ->assertDontSee('jumanji')
+            ->set('search', 'jumanji')
+            ->assertSee('jumanji');
     }
 
 
