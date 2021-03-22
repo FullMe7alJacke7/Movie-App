@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'asset_url' => "http://localhost/_Projects/tall-stack-example/public",
+    'asset_url' => "http://localhost/MovieApp/public",
 
     /*
     |--------------------------------------------------------------------------

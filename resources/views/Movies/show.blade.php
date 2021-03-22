@@ -11,9 +11,10 @@
                 <img class="w-64 md:w-96" src="https://via.placeholder.com/250x375" alt="poster">
             @endif
             <div class="md:ml-24">
-                <h2 class="text-4xl font-semibold">{{$movie['title']}}</h2>
                 <div class="mt-2">
-                    <a href="#" class="text-lg mt-2 text-gray-400 hover:text-gray:300">Beauty and the Beast</a>
+                    <a href="#" class="text-lg mt-2 text-gray-400 hover:text-gray:300">
+                        <h2 class="text-4xl font-semibold">{{$movie['title']}}</h2>
+                    </a>
                     <div class="flex flex-wrap items-center text-gray-400 text-sm">
                         <span class="text-yellow-600"><i class="fas fa-star"></i></span>
                         <span class="text-yellow-600"><i class="fas fa-star"></i></span>

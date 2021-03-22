@@ -30,11 +30,9 @@
                         <li class="border-b border-gray-700">
                             <a href="{{route('movies.show', $result)}}"
                                class="block focus:bg-blue-900 hover:bg-gray-700 px-3 py-3 flex items-center transition ease-in-out duration-150"
-                               @if ($loop->last) @keydown.tab="isOpen = false" @endif
-                            >
+                               @if ($loop->last) @keydown.tab="isOpen = false" @endif>
                                 @if ($result['poster_path'])
-                                    <img class="w-8" src="https://image.tmdb.org/t/p/w92/{{$result['poster_path']}}"
-                                         alt="poster">
+                                    <img class="w-8" src="https://image.tmdb.org/t/p/w92/{{$result['poster_path']}}" alt="poster">
                                 @else
                                     <img class="w-8" src="https://via.placeholder.com/50x75" alt="poster">
                                 @endif
